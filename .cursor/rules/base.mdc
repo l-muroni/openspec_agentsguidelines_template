@@ -241,3 +241,8 @@ Al termine del change creare `docs/summaries/<nome-change>.md`. Il nome corrispo
 ---
 
 # PATTERNS — Pattern specifici dello stack
+
+## Struttura
+
+apps/api
+apps/web

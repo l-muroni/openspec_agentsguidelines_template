@@ -13,6 +13,7 @@ Le regole per gli agenti stanno in `.agent-guidelines/` e vengono distribuite in
 | `openspec/` | Spec del sistema (`specs/`), change in corso e archiviati (`changes/`), configurazione (`config.yaml`) |
 | `config/openspec-profile.json` | Workflow OpenSpec attivi, pinnati nel repo |
 | `.opencode/` | Comandi e skill per OpenCode: `/opsx-*` generati da OpenSpec, `/grill`, `/update-context`, skill `grilling` e `domain-modeling` |
+| `.cursor/commands/`, `.cursor/skills/` | Stessi comandi e skill per Cursor: `/opsx-*` e skill `openspec-*` generati da OpenSpec; `/grill`, `/update-context`, `grilling`, `domain-modeling` |
 | `opencode.json` | Permessi dell'agente su file e comandi |
 | `GLOSSARY.md` | Glossario di dominio, compilato durante l'analisi |
 | `scripts/` | `sync-agents.js`, `openspec-update.sh`, `check-flow.sh` |
@@ -73,8 +74,8 @@ Sui branch `spec/` sono ammessi solo commit `docs`.
 | --- | --- |
 | `npm run sync-agents` | Dopo ogni modifica a `.agent-guidelines/` |
 | `npm run openspec-update` | Dopo un aggiornamento di OpenSpec o del profilo in `config/openspec-profile.json` |
-| `/grill <descrizione>` | Passo 1, in OpenCode |
-| `/update-context` | Fine di ogni sessione agente |
+| `/grill <descrizione>` | Passo 1, in OpenCode o Cursor |
+| `/update-context` | Fine di ogni sessione agente (OpenCode o Cursor) |
 
 ## Chi controlla cosa
 
@@ -83,7 +84,7 @@ Sui branch `spec/` sono ammessi solo commit `docs`.
 | Niente commit e push diretti su `main` | ✓ | protezione del branch | `deny` su checkout, merge, push forzati |
 | Messaggi Conventional Commits | ✓ | ✓ | |
 | File generati allineati alle guidelines | ✓ | ✓ | `deny` sui file generati |
-| Comandi OpenSpec allineati al profilo | | ✓ | `deny` su `.opencode/` |
+| Comandi OpenSpec allineati al profilo | | ✓ | `deny` su `.opencode/` e `.cursor/` |
 | Nome del branch, PR della spec solo documenti e solo commit `docs` | | ✓ | |
 | Change archiviato e summary presenti prima del merge | | ✓ | |
 | Spec e change OpenSpec validi | | ✓ | `deny` su `openspec/specs/` |
@@ -105,6 +106,5 @@ Gli hook locali si possono saltare: il gate vero è la CI con la protezione di `
 
 - **I permessi di OpenCode non sono una sandbox**: un agente può scrivere su un file protetto passando dalla shell. Il contenimento vero sono CI, protezione del branch e, in futuro, `sbx`.
 - **I branch `feature/`, `fix/` e `chore/` non richiedono un change OpenSpec**: la CI ne controlla solo il nome. Nei progetti sono una porta laterale rispetto al flusso, da regolare.
-- **Cursor riceve le regole ma non i comandi `/opsx-*`**: OpenSpec è generato solo per OpenCode.
 - **`npm audit` segnala `braces`** nelle dipendenze di sviluppo, tramite la CLI di OpenSpec: non sfruttabile in questo contesto, e la CI controlla solo le dipendenze di produzione.
 - **La copertura scenari → test non è ancora un gate**: dipende dal test runner dello stack e va aggiunta per progetto.
